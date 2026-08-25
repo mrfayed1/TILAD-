@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- عدّل: وصف مختصر (١٥٠-١٦٠ حرف) يظهر في نتائج جوجل والمشاركة على السوشيال ميديا -->
+<meta name="description" content="[وصف مختصر وجذاب للمقال]">
+<title>تِلاد TILAD — [عنوان المقال هنا]</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='46' fill='none' stroke='%23e9e4d6' stroke-width='3'/%3E%3Cellipse cx='60' cy='60' rx='46' ry='18' fill='none' stroke='%2323a68c' stroke-width='2'/%3E%3Cellipse cx='60' cy='60' rx='18' ry='46' fill='none' stroke='%2323a68c' stroke-width='2'/%3E%3Cpath d='M 32 66 Q 60 46, 88 66' fill='none' stroke='%23b8863f' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='52' cy='80' r='4.5' fill='%23b8863f'/%3E%3Ccircle cx='68' cy='80' r='4.5' fill='%23b8863f'/%3E%3Ccircle cx='60' cy='34' r='4' fill='%23e9e4d6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1a26;
+    --ink-deep:#0a121b;
+    --ink-alt:#1a2836;
+    --ink-line:rgba(233,228,214,0.12);
+    --parchment:#e9e4d6;
+    --parchment-dim:rgba(233,228,214,0.62);
+    --paper:#f3efe4;
+    --paper-line:rgba(22,31,43,0.12);
+    --emerald:#1c6b5c;
+    --emerald-light:#2fa88f;
+    --bronze:#b8863f;
+    --wine:#8a2f35;
+    --text-on-paper:#161f2b;
+    --text-on-paper-soft:#3d4a58;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--text-on-paper);font-family:'Tajawal',sans-serif;}
+
+  /* NAV - dark, matches homepage */
+  nav{
+    position:sticky;top:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 6%;
+    background:rgba(15,26,38,0.95);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--ink-line);
+  }
+  .nav-mark{
+    font-family:'Amiri',serif;font-size:1.25rem;font-weight:700;color:var(--parchment);
+    display:flex;align-items:center;gap:8px;
+  }
+  .nav-mark-en{font-size:0.58rem;letter-spacing:2px;color:var(--emerald-light);direction:ltr;font-weight:700;}
+  .nav-links{display:flex;gap:28px;list-style:none;font-size:0.88rem;font-weight:500;}
+  .nav-links a{color:var(--parchment-dim);text-decoration:none;}
+  .nav-links a:hover{color:var(--parchment);}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+  .nav-toggle span{width:22px;height:2px;background:var(--parchment);}
+  @media(max-width:800px){
+    .nav-links{display:none;position:absolute;top:100%;right:0;left:0;flex-direction:column;gap:0;background:var(--ink-deep);border-bottom:1px solid var(--ink-line);}
+    .nav-links.open{display:flex;}
+    .nav-links li{border-top:1px solid var(--ink-line);}
+    .nav-links a{display:block;padding:16px 6%;}
+    .nav-toggle{display:flex;}
+  }
+
+  /* ARTICLE HEADER - dark band for gravitas */
+  .article-header{
+    background:var(--ink);
+    color:var(--parchment);
+    padding:70px 6% 60px;
+  }
+  .article-header-inner{max-width:760px;margin:0 auto;text-align:center;}
+  .breadcrumb{
+    font-size:0.8rem;
+    color:var(--emerald-light);
+    font-weight:700;
+    letter-spacing:1px;
+    margin-bottom:22px;
+  }
+  .breadcrumb a{color:var(--emerald-light);text-decoration:none;}
+  .breadcrumb span{color:var(--parchment-dim);margin:0 6px;}
+  h1.article-title{
+    font-family:'Amiri',serif;
+    font-size:clamp(2rem,5vw,3rem);
+    line-height:1.35;
+    font-weight:700;
+    margin-bottom:24px;
+    color:var(--parchment);
+  }
+  .article-dek{
+    font-size:1.1rem;
+    color:var(--parchment-dim);
+    line-height:1.8;
+    font-weight:400;
+    max-width:600px;
+    margin:0 auto 36px;
+  }
+  .article-meta{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+    font-size:0.85rem;
+    color:var(--parchment-dim);
+    flex-wrap:wrap;
+  }
+  .author-avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--emerald);color:var(--parchment);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Amiri',serif;font-weight:700;font-size:0.95rem;
+    flex-shrink:0;
+  }
+  .author-info{display:flex;flex-direction:column;gap:2px;text-align:right;}
+  .author-name{color:var(--parchment);font-weight:700;font-size:0.88rem;}
+  .author-credential{color:var(--parchment-dim);font-size:0.76rem;font-weight:300;}
+  .article-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--bronze);}
+
+  .hero-image{
+    max-width:1000px;
+    margin:50px auto 0;
+    padding:0 6%;
+  }
+  .hero-image-box{
+    aspect-ratio:16/8;
+    background:linear-gradient(135deg, var(--ink-alt) 0%, var(--ink) 55%, var(--wine) 130%);
+    position:relative;
+    overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hero-image-box::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(233,228,214,0.04) 0px, transparent 1px, transparent 60px),
+      repeating-linear-gradient(0deg, rgba(233,228,214,0.04) 0px, transparent 1px, transparent 60px);
+  }
+  .hero-image-caption{
+    font-family:'Amiri',serif;
+    font-size:1.1rem;
+    color:rgba(233,228,214,0.55);
+    position:relative;
+    z-index:1;
+    text-align:center;
+    padding:0 40px;
+  }
+
+  /* ARTICLE BODY - light reading surface */
+  .article-body{
+    max-width:680px;
+    margin:0 auto;
+    padding:70px 6% 100px;
+  }
+  .article-body p{
+    font-size:1.08rem;
+    line-height:2.05;
+    margin-bottom:28px;
+    color:var(--text-on-paper);
+    font-weight:400;
+  }
+  .article-body p.lead{
+    font-size:1.2rem;
+    color:var(--text-on-paper-soft);
+    font-weight:500;
+  }
+  .article-body h2{
+    font-family:'Amiri',serif;
+    font-size:1.7rem;
+    margin:0 0 22px;
+    padding-top:32px;
+    border-top:1px solid var(--paper-line);
+    color:var(--ink);
+  }
+  .pull-quote{
+    font-family:'Amiri',serif;
+    font-size:1.5rem;
+    line-height:1.6;
+    color:var(--wine);
+    border-right:3px solid var(--emerald);
+    padding:8px 28px;
+    margin:44px 0;
+  }
+  .article-body figure{margin:44px 0;}
+  .inline-image{
+    aspect-ratio:16/9;
+    background:linear-gradient(135deg, var(--emerald) 0%, var(--ink-alt) 100%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  figcaption{
+    font-size:0.82rem;
+    color:var(--text-on-paper-soft);
+    margin-top:10px;
+    text-align:center;
+  }
+
+  .tags{
+    display:flex;gap:10px;flex-wrap:wrap;
+    margin-top:50px;
+    padding-top:30px;
+    border-top:1px solid var(--paper-line);
+  }
+  .tag{
+    font-size:0.8rem;
+    padding:7px 16px;
+    border:1px solid var(--bronze);
+    color:var(--bronze);
+    border-radius:2px;
+  }
+
+  /* RELATED */
+  .related{
+    background:var(--ink-deep);
+    padding:90px 6%;
+  }
+  .related-head{
+    text-align:center;
+    margin-bottom:56px;
+  }
+  .related-head .eyebrow{
+    font-size:0.78rem;letter-spacing:3px;color:var(--emerald-light);font-weight:700;margin-bottom:14px;
+  }
+  .related-head h3{
+    font-family:'Amiri',serif;font-size:1.9rem;color:var(--parchment);
+  }
+  .related-grid{
+    max-width:1050px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--ink-line);
+  }
+  .related-card{
+    background:var(--ink-deep);padding:32px 26px;
+    transition:background .3s ease;
+  }
+  .related-card:hover{background:var(--ink-alt);}
+  .related-card .cat{font-size:0.72rem;color:var(--bronze);font-weight:700;letter-spacing:1px;margin-bottom:12px;display:block;}
+  .related-card h4{font-family:'Amiri',serif;font-size:1.2rem;color:var(--parchment);line-height:1.5;}
+  @media(max-width:800px){.related-grid{grid-template-columns:1fr;}}
+
+  footer{
+    padding:32px 6%;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:0.82rem;color:var(--parchment-dim);
+    flex-wrap:wrap;gap:12px;
+    background:var(--ink-deep);
+  }
+  footer .foot-mark{font-family:'Amiri',serif;font-weight:700;color:var(--parchment);}
+</style>
+<!-- عدّل: بيانات المقال المنظّمة (Schema.org) — بتساعد جوجل يفهم المقال ويعرضه أفضل في نتائج البحث -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "[عنوان المقال هنا]",
+  "description": "[نفس وصف الـmeta description بالأعلى]",
+  "image": "[رابط الصورة الرئيسية للمقال]",
+  "datePublished": "[YYYY-MM-DD]",
+  "author": {
+    "@type": "Person",
+    "name": "[اسم الكاتب]"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "تِلاد"
+  }
+}
+</script>
+<!-- Google Analytics — استبدل G-XXXXXXXXXX برقم القياس الفعلي بعد عمل حساب على analytics.google.com -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-mark" style="text-decoration:none;">تِلاد <span class="nav-mark-en">TILAD</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#civs">الحضارات</a></li>
+    <li><a href="index.html#affairs">قضايا العالم</a></li>
+    <li><a href="index.html#pillars">الأقسام</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="القائمة"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ======================================================
+     عدّل العنوان في <title> فوق ده كمان (السطر 6) — لازم يطابق عنوان المقال
+====================================================== -->
+
+<div class="article-header">
+  <div class="article-header-inner">
+    <!-- عدّل: مسار التصنيف (اسم القسم فقط، الروابط شكلية دلوقتي) -->
+    <div class="breadcrumb"><a href="#">[اسم القسم — مثال: الحضارة الإسلامية]</a><span>/</span><a href="#">[تصنيف فرعي اختياري]</a></div>
+
+    <!-- عدّل: عنوان المقال الرئيسي -->
+    <h1 class="article-title">[عنوان المقال هنا]</h1>
+
+    <!-- عدّل: جملة تلخيصية قصيرة (Dek) تحت العنوان -->
+    <p class="article-dek">[جملة أو جملتين تلخّص فكرة المقال وتشوّق القارئ]</p>
+
+    <div class="article-meta">
+      <!-- عدّل: أول حرف من اسم الكاتب (بيظهر في الدائرة) -->
+      <div class="author-avatar">[ح]</div>
+      <div class="author-info">
+        <!-- عدّل: اسم الكاتب كامل — مثال: د. أحمد المصري -->
+        <span class="author-name">[اسم الكاتب]</span>
+        <!-- عدّل: الصفة/التخصص — مثال: أستاذ التاريخ الإسلامي، جامعة القاهرة -->
+        <span class="author-credential">[الصفة أو التخصص]</span>
+      </div>
+      <span class="dot"></span>
+      <!-- عدّل: مدة القراءة التقريبية -->
+      <span>[X] دقائق قراءة</span>
+      <span class="dot"></span>
+      <!-- عدّل: تاريخ النشر -->
+      <span>[التاريخ] ٢٠٢٦</span>
+    </div>
+  </div>
+</div>
+
+<div class="hero-image">
+  <div class="hero-image-box">
+    <!-- عدّل: تعليق توضيحي على الصورة الرئيسية (الصورة نفسها تدرّج لوني بديل حاليًا — لاستبدالها بصورة حقيقية، غيّر خاصية background في .hero-image-box بأعلى الملف إلى: background:url('../assets/images/اسم-الصورة.jpg') center/cover; ) -->
+    <div class="hero-image-caption">[وصف الصورة الرئيسية]</div>
+  </div>
+</div>
+
+<article class="article-body">
+  <!-- عدّل: الفقرة الافتتاحية (لازم تفضل عليها class="lead" عشان تظهر أكبر وأبرز) -->
+  <p class="lead">[الفقرة الافتتاحية — أهم جملة في المقال، بتلخّص الفكرة الأساسية]</p>
+
+  <p>[فقرة نص عادية]</p>
+
+  <!-- عدّل: عنوان فرعي أول -->
+  <h2>[عنوان فرعي أول]</h2>
+  <p>[فقرة نص]</p>
+
+  <!-- اختياري: اقتباس بارز — احذف السطر ده لو مش محتاجه -->
+  <div class="pull-quote">"[اقتباس مؤثر أو جملة محورية من المقال]"</div>
+
+  <p>[فقرة نص]</p>
+
+  <!-- اختياري: صورة داخلية إضافية — احذف الـfigure كله لو مش محتاجه -->
+  <figure>
+    <div class="inline-image"></div>
+    <figcaption>[تعليق على الصورة الداخلية]</figcaption>
+  </figure>
+
+  <!-- عدّل: عنوان فرعي ثاني -->
+  <h2>[عنوان فرعي ثاني]</h2>
+  <p>[فقرة الخاتمة]</p>
+
+  <!-- عدّل: كلمات مفتاحية (تاجات) تصف المقال، ٣-٥ كلمات كافية -->
+  <div class="tags">
+    <span class="tag">[تاج ١]</span>
+    <span class="tag">[تاج ٢]</span>
+    <span class="tag">[تاج ٣]</span>
+  </div>
+</article>
+
+<!-- قسم "مقالات ذات صلة" اختياري بالكامل — لو لسه مفيش مقالات تانية جاهزة، احذف section.related كله -->
+<section class="related">
+  <div class="related-head">
+    <div class="eyebrow">تابع القراءة</div>
+    <h3>مقالات ذات صلة</h3>
+  </div>
+  <div class="related-grid">
+    <div class="related-card">
+      <span class="cat">[قسم]</span>
+      <h4>[عنوان مقال ذو صلة]</h4>
+    </div>
+    <div class="related-card">
+      <span class="cat">[قسم]</span>
+      <h4>[عنوان مقال ذو صلة]</h4>
+    </div>
+    <div class="related-card">
+      <span class="cat">[قسم]</span>
+      <h4>[عنوان مقال ذو صلة]</h4>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-mark">تِلاد</div>
+  <div>© ٢٠٢٦ جميع الحقوق محفوظة</div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function(){
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

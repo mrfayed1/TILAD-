@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="تواصل مع فريق تِلاد لأي استفسار أو اقتراح مقال أو تعاون محتمل.">
+<title>تواصل معنا — تِلاد TILAD</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='46' fill='none' stroke='%23e9e4d6' stroke-width='3'/%3E%3Cellipse cx='60' cy='60' rx='46' ry='18' fill='none' stroke='%2323a68c' stroke-width='2'/%3E%3Cellipse cx='60' cy='60' rx='18' ry='46' fill='none' stroke='%2323a68c' stroke-width='2'/%3E%3Cpath d='M 32 66 Q 60 46, 88 66' fill='none' stroke='%23b8863f' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='52' cy='80' r='4.5' fill='%23b8863f'/%3E%3Ccircle cx='68' cy='80' r='4.5' fill='%23b8863f'/%3E%3Ccircle cx='60' cy='34' r='4' fill='%23e9e4d6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1a26; --ink-deep:#0a121b; --ink-alt:#1a2836; --ink-line:rgba(233,228,214,0.12);
+    --parchment:#e9e4d6; --parchment-dim:rgba(233,228,214,0.62);
+    --emerald:#1c6b5c; --emerald-light:#2fa88f; --bronze:#b8863f; --wine:#8a2f35;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--ink);color:var(--parchment);font-family:'Tajawal',sans-serif;}
+
+  nav{
+    position:sticky;top:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 6%;
+    background:rgba(15,26,38,0.95);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--ink-line);
+  }
+  .nav-mark{font-family:'Amiri',serif;font-size:1.3rem;font-weight:700;color:var(--parchment);display:flex;align-items:center;gap:8px;}
+  .nav-mark-en{font-size:0.6rem;letter-spacing:2px;color:var(--emerald-light);direction:ltr;font-weight:700;}
+  .nav-links{display:flex;gap:28px;list-style:none;font-size:0.9rem;font-weight:500;}
+  .nav-links a{color:var(--parchment-dim);text-decoration:none;}
+  .nav-links a:hover{color:var(--parchment);}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+  .nav-toggle span{width:22px;height:2px;background:var(--parchment);}
+  @media(max-width:800px){
+    .nav-links{display:none;position:absolute;top:100%;right:0;left:0;flex-direction:column;gap:0;background:var(--ink-deep);border-bottom:1px solid var(--ink-line);}
+    .nav-links.open{display:flex;}
+    .nav-links li{border-top:1px solid var(--ink-line);}
+    .nav-links a{display:block;padding:16px 6%;}
+    .nav-toggle{display:flex;}
+  }
+
+  .page-head{padding:80px 6% 50px;text-align:center;}
+  .page-head .eyebrow{font-size:0.8rem;letter-spacing:3px;color:var(--emerald-light);font-weight:700;margin-bottom:16px;}
+  .page-head h1{font-family:'Amiri',serif;font-size:clamp(2.2rem,5vw,3.2rem);}
+
+  /* CONTACT SECTION */
+  .contact-section{
+    max-width:760px;margin:0 auto;
+    padding:80px 6% 120px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+  }
+  .contact-info h2{
+    font-family:'Amiri',serif;font-size:1.7rem;margin-bottom:20px;
+  }
+  .contact-info p{color:var(--parchment-dim);line-height:1.9;font-weight:300;margin-bottom:28px;}
+  .contact-detail{margin-bottom:18px;}
+  .contact-detail .label{font-size:0.75rem;color:var(--bronze);font-weight:700;letter-spacing:1px;display:block;margin-bottom:4px;}
+  .contact-detail .value{font-size:0.95rem;color:var(--parchment);}
+  .contact-link{text-decoration:none;border-bottom:1px solid transparent;transition:border-color .25s ease, color .25s ease;}
+  .contact-link:hover{color:var(--emerald-light);border-bottom-color:var(--emerald-light);}
+
+  .contact-form label{
+    display:block;font-size:0.85rem;color:var(--parchment-dim);margin-bottom:8px;
+  }
+  .contact-form .field{margin-bottom:20px;}
+  .contact-form input,.contact-form textarea{
+    width:100%;padding:13px 16px;
+    background:var(--ink-alt);
+    border:1px solid var(--ink-line);
+    color:var(--parchment);
+    font-family:'Tajawal',sans-serif;
+    font-size:0.92rem;
+    outline:none;
+    resize:vertical;
+  }
+  .contact-form input:focus,.contact-form textarea:focus{border-color:var(--emerald-light);}
+  .contact-form button{
+    padding:14px 36px;
+    background:transparent;
+    border:1.5px solid var(--parchment);
+    color:var(--parchment);
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:0.9rem;
+    cursor:pointer;
+    transition:all .3s ease;
+  }
+  .contact-form button:hover{background:var(--parchment);color:var(--ink);}
+  @media(max-width:700px){.contact-section{grid-template-columns:1fr;}}
+
+  footer{
+    padding:32px 6%;display:flex;justify-content:space-between;align-items:center;
+    font-size:0.82rem;color:var(--parchment-dim);flex-wrap:wrap;gap:12px;
+    background:var(--ink-deep);border-top:1px solid var(--ink-line);
+  }
+  footer .foot-mark{font-family:'Amiri',serif;font-weight:700;color:var(--parchment);}
+</style>
+<!-- Google Analytics — استبدل G-XXXXXXXXXX برقم القياس الفعلي بعد عمل حساب على analytics.google.com -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+</head>
+<body>
+
+<nav>
+  <div class="nav-mark">تِلاد <span class="nav-mark-en">TILAD</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="index.html#civs">الحضارات</a></li>
+    <li><a href="#">قضايا العالم</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="القائمة"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-head">
+  <div class="eyebrow">ابقَ على تواصل</div>
+  <h1>تواصل معنا</h1>
+</div>
+
+<div class="contact-section">
+  <div class="contact-info">
+    <h2>راسلنا</h2>
+    <p>لأي استفسار، اقتراح مقال، أو تعاون محتمل — يسعدنا تواصلك معنا مباشرة.</p>
+    <div class="contact-detail">
+      <span class="label">البريد الإلكتروني</span>
+      <a href="mailto:tiladwebsite1@gmail.com" class="value contact-link">tiladwebsite1@gmail.com</a>
+    </div>
+    <div class="contact-detail">
+      <span class="label">تابعنا</span>
+      <a href="https://x.com/tilad_official1" target="_blank" rel="noopener" class="value contact-link">X</a>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ربط الفورم بـ Formspree (خطوتين بسيطتين، ٢ دقيقة):
+       ١. روح https://formspree.io واعمل حساب مجاني بإيميلك
+       ٢. هيديك "Form ID" — استبدل به "YOUR_FORM_ID" في السطر تحت
+       بعد كده أي رسالة هتتبعت هنا هتوصلك على إيميلك مباشرة.
+  ============================================================ -->
+  <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <div class="field">
+      <label>الاسم</label>
+      <input type="text" name="name" required>
+    </div>
+    <div class="field">
+      <label>البريد الإلكتروني</label>
+      <input type="email" name="email" required>
+    </div>
+    <div class="field">
+      <label>رسالتك</label>
+      <textarea name="message" rows="4" required></textarea>
+    </div>
+    <button type="submit">إرسال الرسالة</button>
+  </form>
+</div>
+
+<footer>
+  <div class="foot-mark">تِلاد</div>
+  <div>© ٢٠٢٦ جميع الحقوق محفوظة</div>
+</footer>
+
+<script>
+
+  document.getElementById('navToggle').addEventListener('click', function(){
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+</script>
+
+</body>
+</html>

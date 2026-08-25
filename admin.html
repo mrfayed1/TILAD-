@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة كتابة المقالات — تِلاد TILAD (أداة داخلية)</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='46' fill='none' stroke='%23e9e4d6' stroke-width='3'/%3E%3Cellipse cx='60' cy='60' rx='46' ry='18' fill='none' stroke='%2323a68c' stroke-width='2'/%3E%3Cellipse cx='60' cy='60' rx='18' ry='46' fill='none' stroke='%2323a68c' stroke-width='2'/%3E%3Cpath d='M 32 66 Q 60 46, 88 66' fill='none' stroke='%23b8863f' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='52' cy='80' r='4.5' fill='%23b8863f'/%3E%3Ccircle cx='68' cy='80' r='4.5' fill='%23b8863f'/%3E%3Ccircle cx='60' cy='34' r='4' fill='%23e9e4d6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1a26; --ink-deep:#0a121b; --ink-alt:#1a2836; --ink-line:rgba(233,228,214,0.14);
+    --parchment:#e9e4d6; --parchment-dim:rgba(233,228,214,0.62);
+    --emerald:#1c6b5c; --emerald-light:#2fa88f; --bronze:#b8863f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--ink);color:var(--parchment);font-family:'Tajawal',sans-serif;padding-bottom:100px;}
+
+  header{
+    padding:40px 6% 30px;
+    text-align:center;
+    border-bottom:1px solid var(--ink-line);
+    background:radial-gradient(circle at 50% 0%, rgba(47,168,143,0.08) 0%, transparent 60%);
+  }
+  header .badge{
+    display:inline-block;font-size:0.72rem;letter-spacing:2px;color:var(--bronze);
+    font-weight:700;margin-bottom:14px;
+  }
+  header h1{font-family:'Amiri',serif;font-size:clamp(1.8rem,4vw,2.4rem);margin-bottom:10px;}
+  header p{color:var(--parchment-dim);font-size:0.9rem;font-weight:300;max-width:560px;margin:0 auto;}
+
+  .wrap{max-width:820px;margin:0 auto;padding:50px 6%;}
+  .panel{
+    background:var(--ink-alt);border:1px solid var(--ink-line);
+    padding:36px 32px;margin-bottom:24px;
+  }
+  .panel h2{font-family:'Amiri',serif;font-size:1.25rem;margin-bottom:22px;color:var(--emerald-light);}
+
+  .field{margin-bottom:20px;}
+  .field label{display:block;font-size:0.88rem;color:var(--parchment-dim);margin-bottom:8px;font-weight:500;}
+  .field .hint{font-size:0.76rem;color:var(--parchment-dim);opacity:0.7;margin-top:6px;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:13px 16px;background:var(--ink);
+    border:1px solid var(--ink-line);color:var(--parchment);
+    font-family:'Tajawal',sans-serif;font-size:0.95rem;outline:none;resize:vertical;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--emerald-light);}
+  .field textarea{line-height:1.8;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:640px){.row2{grid-template-columns:1fr;}}
+
+  .generate-btn{
+    display:block;width:100%;padding:18px;margin-top:10px;
+    background:var(--emerald);color:var(--parchment);border:none;
+    font-family:'Tajawal',sans-serif;font-weight:700;font-size:1rem;
+    cursor:pointer;transition:background .3s ease;
+  }
+  .generate-btn:hover{background:var(--emerald-light);}
+
+  .output-panel{display:none;}
+  .output-panel.show{display:block;}
+  .output-box{
+    background:var(--ink);border:1px solid var(--ink-line);
+    padding:18px;margin-bottom:14px;position:relative;
+  }
+  .output-box label{display:block;font-size:0.8rem;color:var(--bronze);font-weight:700;margin-bottom:10px;}
+  .output-box textarea{
+    width:100%;min-height:110px;background:var(--ink-deep);color:var(--parchment-dim);
+    border:1px solid var(--ink-line);font-family:monospace;font-size:0.78rem;padding:12px;
+    direction:ltr;text-align:left;
+  }
+  .copy-btn{
+    margin-top:10px;padding:9px 20px;background:transparent;border:1px solid var(--parchment);
+    color:var(--parchment);font-family:'Tajawal',sans-serif;font-size:0.82rem;font-weight:700;
+    cursor:pointer;transition:all .25s ease;
+  }
+  .copy-btn:hover{background:var(--parchment);color:var(--ink);}
+  .copy-btn.copied{background:var(--emerald);border-color:var(--emerald);color:var(--parchment);}
+
+  .download-box{
+    text-align:center;padding:30px;background:var(--ink);border:1px dashed var(--emerald-light);margin-bottom:14px;
+  }
+  .download-link{
+    display:inline-block;padding:15px 34px;background:var(--emerald);color:var(--parchment);
+    text-decoration:none;font-weight:700;font-size:0.95rem;margin-top:12px;
+  }
+  .download-link:hover{background:var(--emerald-light);}
+
+  .steps{
+    background:var(--ink);border:1px solid var(--ink-line);padding:24px 28px;margin-bottom:14px;
+  }
+  .steps h3{font-family:'Amiri',serif;font-size:1.05rem;margin-bottom:14px;color:var(--parchment);}
+  .steps ol{padding-right:20px;color:var(--parchment-dim);font-size:0.88rem;line-height:2;font-weight:300;}
+</style>
+</head>
+<body>
+
+<div id="lockScreen" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6%;">
+  <div style="font-family:'Amiri',serif;font-size:1.8rem;margin-bottom:14px;">تِلاد — دخول اللوحة</div>
+  <p style="color:var(--parchment-dim);font-size:0.9rem;margin-bottom:28px;max-width:420px;font-weight:300;">
+    هذه أداة داخلية خاصة بمدير الموقع فقط.
+  </p>
+  <input type="password" id="lockPassword" placeholder="كلمة السر"
+    style="padding:14px 18px;width:280px;max-width:80vw;background:var(--ink-alt);border:1px solid var(--ink-line);color:var(--parchment);font-family:'Tajawal',sans-serif;font-size:0.95rem;outline:none;text-align:center;margin-bottom:16px;">
+  <br>
+  <button onclick="checkPassword()" style="padding:13px 34px;background:var(--emerald);color:var(--parchment);border:none;font-family:'Tajawal',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;">دخول</button>
+  <p id="lockError" style="color:var(--wine);font-size:0.82rem;margin-top:16px;display:none;">كلمة السر غير صحيحة</p>
+</div>
+
+<div id="mainContent" style="display:none;">
+
+<header>
+  <span class="badge">أداة داخلية — مش صفحة عامة في الموقع</span>
+  <h1>لوحة كتابة المقالات</h1>
+  <p>اكتب مقالك هنا، ودوس "توليد المقال" — هتاخد ملف جاهز بنفس هوية تِلاد، جاهز ترفعه على الموقع.</p>
+</header>
+
+<div class="wrap">
+
+  <div class="panel">
+    <h2>١. بيانات المقال الأساسية</h2>
+    <div class="field">
+      <label>عنوان المقال</label>
+      <input type="text" id="f_title" placeholder="مثال: كيف أعاد سقوط القسطنطينية رسم خريطة أوروبا؟">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>القسم / الحضارة</label>
+        <select id="f_category">
+          <optgroup label="── الحضارات القديمة ──">
+            <option value="مصر القديمة">مصر القديمة</option>
+            <option value="بلاد الرافدين">بلاد الرافدين</option>
+            <option value="الصين القديمة">الصين القديمة</option>
+            <option value="حضارة وادي السند">حضارة وادي السند</option>
+            <option value="الحضارة الفارسية">الحضارة الفارسية</option>
+            <option value="اليونان القديمة">اليونان القديمة</option>
+            <option value="روما القديمة">روما القديمة</option>
+          </optgroup>
+          <optgroup label="── الحضارة الإسلامية ──">
+            <option value="الحضارة الإسلامية">الحضارة الإسلامية</option>
+          </optgroup>
+          <optgroup label="── حضارات أخرى حول العالم ──">
+            <option value="ممالك إفريقيا">ممالك إفريقيا</option>
+            <option value="حضارات المايا والإنكا">حضارات المايا والإنكا</option>
+            <option value="حضارات أخرى">حضارات أخرى</option>
+          </optgroup>
+          <optgroup label="── التاريخ الحديث والمعاصر ──">
+            <option value="مصر الحديثة والمعاصرة">مصر الحديثة والمعاصرة</option>
+            <option value="أوروبا الحديثة">أوروبا الحديثة</option>
+            <option value="الولايات المتحدة">الولايات المتحدة</option>
+            <option value="آسيا الحديثة">آسيا الحديثة</option>
+          </optgroup>
+          <optgroup label="── قضايا سياسية معاصرة ──">
+            <option value="قضايا العالم الراهنة">قضايا العالم الراهنة (سياسي/جيوسياسي)</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="field">
+        <label>تصنيف فرعي (يظهر فوق العنوان)</label>
+        <input type="text" id="f_subcat" placeholder="مثال: الدولة العثمانية">
+      </div>
+    </div>
+    <div class="field">
+      <label>الوصف المختصر (Dek) — يظهر تحت العنوان وفي نتائج جوجل</label>
+      <textarea id="f_dek" rows="2" placeholder="جملة أو جملتين تلخّص فكرة المقال وتشوّق القارئ"></textarea>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>٢. بيانات الكاتب</h2>
+    <div class="row2">
+      <div class="field">
+        <label>اسم الكاتب</label>
+        <input type="text" id="f_author" placeholder="مثال: د. أحمد المصري">
+      </div>
+      <div class="field">
+        <label>الصفة / التخصص</label>
+        <input type="text" id="f_credential" placeholder="مثال: أستاذ التاريخ الإسلامي، جامعة القاهرة">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>مدة القراءة (بالدقائق)</label>
+        <input type="number" id="f_readtime" placeholder="مثال: 10">
+      </div>
+      <div class="field">
+        <label>تاريخ النشر</label>
+        <input type="text" id="f_date" placeholder="مثال: ٢١ أغسطس ٢٠٢٦">
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>٣. الصورة الرئيسية (اختياري)</h2>
+    <div class="field">
+      <label>ارفع صورة غلاف من جهازك</label>
+      <input type="file" id="f_image_file" accept="image/*">
+      <p class="hint">هتتضمّن جوه ملف المقال نفسه تلقائيًا، مش محتاج ترفعها لمكان تاني</p>
+      <p class="hint">نصيحة: استخدم صورة أقل من ٥٠٠ كيلوبايت لو أمكن، عشان الصفحة تفضل خفيفة وسريعة التحميل</p>
+      <div id="imagePreviewBox" style="display:none;margin-top:14px;">
+        <img id="imagePreview" style="max-width:200px;max-height:120px;border:1px solid var(--ink-line);">
+      </div>
+    </div>
+    <div class="field">
+      <label>أو الصق رابط صورة جاهز بدل الرفع (اختياري)</label>
+      <input type="text" id="f_image" placeholder="https://... — من Wikimedia Commons أو أي مصدر مرخّص">
+      <p class="hint">لو رفعت صورة من جهازك فوق، مش محتاج تملأ الخانة دي — الصورة المرفوعة هتُستخدم أولًا</p>
+    </div>
+    <div class="field">
+      <label>وصف الصورة (يظهر أسفلها + لمصادر الوصول)</label>
+      <input type="text" id="f_imagecaption" placeholder="مثال: دخول محمد الفاتح إلى القسطنطينية — Wikimedia Commons">
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>٤. نص المقال</h2>
+    <div class="field">
+      <label>الفقرة الافتتاحية (Lead)</label>
+      <textarea id="f_lead" rows="3" placeholder="أهم فقرة في المقال — بتلخّص الفكرة الأساسية"></textarea>
+    </div>
+    <div class="field">
+      <label>باقي المقال</label>
+      <textarea id="f_body" rows="12" placeholder="اكتب باقي فقرات المقال هنا. افصل بين كل فقرة وسطر عنوان فرعي بسطر فاضي.&#10;&#10;لتحديد عنوان فرعي، ابدأ السطر بـ ## (مثال: ## نهاية نظام وبداية آخر)&#10;&#10;لإضافة اقتباس بارز، ابدأ السطر بـ > (مثال: > لم تسقط بيزنطة فحسب...)"></textarea>
+      <p class="hint">## لعنوان فرعي — > لاقتباس بارز — سطر فاضي بين كل فقرة وأخرى</p>
+    </div>
+    <div class="field">
+      <label>الكلمات المفتاحية (تاجات) — افصل بفاصلة</label>
+      <input type="text" id="f_tags" placeholder="مثال: أوروبا الحديثة، الدولة العثمانية، القرن الخامس عشر">
+    </div>
+  </div>
+
+  <button class="generate-btn" onclick="generateArticle()">✦ توليد المقال</button>
+
+  <div class="output-panel" id="outputPanel">
+
+    <div class="download-box">
+      <div style="font-family:'Amiri',serif;font-size:1.1rem;">المقال جاهز!</div>
+      <a class="download-link" id="downloadLink" download="">تحميل ملف المقال</a>
+    </div>
+
+    <div class="steps">
+      <h3>الخطوات التالية</h3>
+      <ol>
+        <li>حمّل ملف المقال بالزرار فوق، وحطّه في نفس المجلد الرئيسي للموقع (بجانب index.html)</li>
+        <li>افتح صفحة الحضارة/القسم المناسب (ملف اسمه يبدأ بـ civ-)، وحط "كود كارت المقال" (تحت) مكان أي كارت نموذجي</li>
+        <li>افتح <code>search.html</code>، وحط "كود نتيجة البحث" (تحت) داخل قائمة <code>articles</code> في الكود</li>
+        <li>ارفع كل التعديلات على الاستضافة (Netlify)</li>
+      </ol>
+    </div>
+
+    <div class="output-box">
+      <label>كود كارت المقال (لصفحة الحضارة المناسبة — الملف اللي اسمه يبدأ بـ civ-)</label>
+      <textarea id="cardOutput" readonly></textarea>
+      <button class="copy-btn" onclick="copyBox('cardOutput', this)">نسخ الكود</button>
+    </div>
+
+    <div class="output-box">
+      <label>كود نتيجة البحث (لملف search.html)</label>
+      <textarea id="searchOutput" readonly></textarea>
+      <button class="copy-btn" onclick="copyBox('searchOutput', this)">نسخ الكود</button>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+<script>
+let uploadedImageDataUrl = null;
+
+document.getElementById('f_image_file').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if (!file) { uploadedImageDataUrl = null; document.getElementById('imagePreviewBox').style.display = 'none'; return; }
+  const reader = new FileReader();
+  reader.onload = function(evt){
+    uploadedImageDataUrl = evt.target.result;
+    document.getElementById('imagePreview').src = uploadedImageDataUrl;
+    document.getElementById('imagePreviewBox').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+function slugify(text) {
+  const map = {'ا':'a','أ':'a','إ':'e','آ':'a','ب':'b','ت':'t','ث':'th','ج':'j','ح':'h','خ':'kh','د':'d','ذ':'th','ر':'r','ز':'z','س':'s','ش':'sh','ص':'s','ض':'d','ط':'t','ظ':'z','ع':'a','غ':'gh','ف':'f','ق':'q','ك':'k','ل':'l','م':'m','ن':'n','ه':'h','و':'w','ي':'y','ى':'a','ة':'a','ء':'','ؤ':'w','ئ':'y',' ':'-'};
+  let out = '';
+  for (const ch of text) { out += map[ch] !== undefined ? map[ch] : (/[a-zA-Z0-9\-]/.test(ch) ? ch : ''); }
+  return out.toLowerCase().replace(/-+/g,'-').replace(/^-|-$/g,'').slice(0,60) || 'article-' + Date.now();
+}
+
+function escapeHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function parseBody(text) {
+  const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+  return blocks.map(b => {
+    if (b.startsWith('## ')) return `  <h2>${escapeHtml(b.slice(3))}</h2>`;
+    if (b.startsWith('> ')) return `  <div class="pull-quote">"${escapeHtml(b.slice(2))}"</div>`;
+    return `  <p>${escapeHtml(b)}</p>`;
+  }).join('\n\n');
+}
+
+function generateArticle() {
+  const title = document.getElementById('f_title').value.trim() || 'مقال بلا عنوان';
+  const category = document.getElementById('f_category').value;
+  const subcat = document.getElementById('f_subcat').value.trim() || category;
+  const dek = document.getElementById('f_dek').value.trim();
+  const author = document.getElementById('f_author').value.trim() || 'محرر تِلاد';
+  const credential = document.getElementById('f_credential').value.trim() || 'فريق التحرير';
+  const readtime = document.getElementById('f_readtime').value.trim() || '5';
+  const date = document.getElementById('f_date').value.trim() || 'التاريخ';
+  const image = uploadedImageDataUrl || document.getElementById('f_image').value.trim();
+  const imagecaption = document.getElementById('f_imagecaption').value.trim();
+  const lead = document.getElementById('f_lead').value.trim();
+  const body = document.getElementById('f_body').value.trim();
+  const tags = document.getElementById('f_tags').value.split('،').map(t=>t.trim()).filter(Boolean).length
+    ? document.getElementById('f_tags').value.split('،').map(t=>t.trim()).filter(Boolean)
+    : document.getElementById('f_tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const authorInitial = author.replace('د.','').trim().charAt(0) || 'ت';
+  const slug = slugify(title);
+
+  const imageStyle = image
+    ? `background:url('${image}') center/cover;`
+    : `background:linear-gradient(135deg, var(--ink-alt) 0%, var(--ink) 55%, var(--wine) 130%);`;
+
+  const bodyHtml = parseBody(body);
+
+  const articleHtml = `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="${escapeHtml(dek)}">
+<title>تِلاد TILAD — ${escapeHtml(title)}</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='46' fill='none' stroke='%23e9e4d6' stroke-width='3'/%3E%3Cellipse cx='60' cy='60' rx='46' ry='18' fill='none' stroke='%2323a68c' stroke-width='2'/%3E%3Cellipse cx='60' cy='60' rx='18' ry='46' fill='none' stroke='%2323a68c' stroke-width='2'/%3E%3Cpath d='M 32 66 Q 60 46, 88 66' fill='none' stroke='%23b8863f' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='52' cy='80' r='4.5' fill='%23b8863f'/%3E%3Ccircle cx='68' cy='80' r='4.5' fill='%23b8863f'/%3E%3Ccircle cx='60' cy='34' r='4' fill='%23e9e4d6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "${escapeHtml(title)}",
+  "description": "${escapeHtml(dek)}",
+  "datePublished": "${escapeHtml(date)}",
+  "author": {"@type": "Person", "name": "${escapeHtml(author)}"},
+  "publisher": {"@type": "Organization", "name": "تِلاد"}
+}
+<\/script>
+<style>
+  :root{
+    --ink:#0f1a26; --ink-deep:#0a121b; --ink-alt:#1a2836; --ink-line:rgba(233,228,214,0.12);
+    --parchment:#e9e4d6; --parchment-dim:rgba(233,228,214,0.62);
+    --paper:#f3efe4; --paper-line:rgba(22,31,43,0.12);
+    --emerald:#1c6b5c; --emerald-light:#2fa88f; --bronze:#b8863f; --wine:#8a2f35;
+    --text-on-paper:#161f2b; --text-on-paper-soft:#3d4a58;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--text-on-paper);font-family:'Tajawal',sans-serif;}
+  nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:16px 6%;background:rgba(15,26,38,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink-line);}
+  .nav-mark{font-family:'Amiri',serif;font-size:1.25rem;font-weight:700;color:var(--parchment);display:flex;align-items:center;gap:8px;text-decoration:none;}
+  .nav-mark-en{font-size:0.58rem;letter-spacing:2px;color:var(--emerald-light);direction:ltr;font-weight:700;}
+  .nav-links{display:flex;gap:28px;list-style:none;font-size:0.88rem;font-weight:500;}
+  .nav-links a{color:var(--parchment-dim);text-decoration:none;}
+  .article-header{background:var(--ink);color:var(--parchment);padding:70px 6% 60px;}
+  .article-header-inner{max-width:760px;margin:0 auto;text-align:center;}
+  .breadcrumb{font-size:0.8rem;color:var(--emerald-light);font-weight:700;margin-bottom:22px;}
+  h1.article-title{font-family:'Amiri',serif;font-size:clamp(2rem,5vw,3rem);line-height:1.35;font-weight:700;margin-bottom:24px;color:var(--parchment);}
+  .article-dek{font-size:1.1rem;color:var(--parchment-dim);line-height:1.8;font-weight:400;max-width:600px;margin:0 auto 36px;}
+  .article-meta{display:flex;justify-content:center;align-items:center;gap:14px;font-size:0.85rem;color:var(--parchment-dim);flex-wrap:wrap;}
+  .author-avatar{width:34px;height:34px;border-radius:50%;background:var(--emerald);color:var(--parchment);display:flex;align-items:center;justify-content:center;font-family:'Amiri',serif;font-weight:700;font-size:0.95rem;flex-shrink:0;}
+  .author-info{display:flex;flex-direction:column;gap:2px;text-align:right;}
+  .author-name{color:var(--parchment);font-weight:700;font-size:0.88rem;}
+  .author-credential{color:var(--parchment-dim);font-size:0.76rem;font-weight:300;}
+  .article-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--bronze);}
+  .hero-image{max-width:1000px;margin:50px auto 0;padding:0 6%;}
+  .hero-image-box{aspect-ratio:16/8;${imageStyle}position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;}
+  .hero-image-box::before{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(10,18,27,0.85) 0%, rgba(10,18,27,0.2) 60%, transparent 100%);}
+  .hero-image-caption{font-family:'Amiri',serif;font-size:1rem;color:rgba(233,228,214,0.85);position:relative;z-index:1;text-align:center;padding:0 40px 24px;}
+  .article-body{max-width:680px;margin:0 auto;padding:70px 6% 100px;}
+  .article-body p{font-size:1.08rem;line-height:2.05;margin-bottom:28px;color:var(--text-on-paper);font-weight:400;}
+  .article-body h2{font-family:'Amiri',serif;font-size:1.7rem;margin:0 0 22px;padding-top:32px;border-top:1px solid var(--paper-line);color:var(--ink);}
+  .pull-quote{font-family:'Amiri',serif;font-size:1.5rem;line-height:1.6;color:var(--wine);border-right:3px solid var(--emerald);padding:8px 28px;margin:44px 0;}
+  .tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:50px;padding-top:30px;border-top:1px solid var(--paper-line);}
+  .tag{font-size:0.8rem;padding:7px 16px;border:1px solid var(--bronze);color:var(--bronze);border-radius:2px;}
+  footer{padding:32px 6%;display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--parchment-dim);flex-wrap:wrap;gap:12px;background:var(--ink-deep);}
+  footer .foot-mark{font-family:'Amiri',serif;font-weight:700;color:var(--parchment);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-mark">تِلاد <span class="nav-mark-en">TILAD</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#civs">الحضارات</a></li>
+    <li><a href="search.html">بحث</a></li>
+  </ul>
+</nav>
+
+<div class="article-header">
+  <div class="article-header-inner">
+    <div class="breadcrumb">${escapeHtml(subcat)}</div>
+    <h1 class="article-title">${escapeHtml(title)}</h1>
+    <p class="article-dek">${escapeHtml(dek)}</p>
+    <div class="article-meta">
+      <div class="author-avatar">${escapeHtml(authorInitial)}</div>
+      <div class="author-info">
+        <span class="author-name">${escapeHtml(author)}</span>
+        <span class="author-credential">${escapeHtml(credential)}</span>
+      </div>
+      <span class="dot"></span>
+      <span>${escapeHtml(readtime)} دقائق قراءة</span>
+      <span class="dot"></span>
+      <span>${escapeHtml(date)}</span>
+    </div>
+  </div>
+</div>
+
+${image ? `<div class="hero-image">
+  <div class="hero-image-box">
+    <div class="hero-image-caption">${escapeHtml(imagecaption)}</div>
+  </div>
+</div>` : ''}
+
+<article class="article-body">
+  <p style="font-size:1.2rem;color:var(--text-on-paper-soft);font-weight:500;">${escapeHtml(lead)}</p>
+
+${bodyHtml}
+
+  <div class="tags">
+${tags.map(t => `    <span class="tag">${escapeHtml(t)}</span>`).join('\n')}
+  </div>
+</article>
+
+<footer>
+  <div class="foot-mark">تِلاد</div>
+  <div>© ٢٠٢٦ جميع الحقوق محفوظة</div>
+</footer>
+
+</body>
+</html>`;
+
+  const cardHtml = `<a href="article-${slug}.html" class="article-card">
+  <div class="article-thumb" style="${image ? `background:url('${image}') center/cover;` : ''}"></div>
+  <div class="article-card-body">
+    <span class="article-cat">${escapeHtml(subcat)}</span>
+    <h3>${escapeHtml(title)}</h3>
+    <div class="article-card-meta"><span>${escapeHtml(readtime)} دقائق</span><span class="dot"></span><span>${escapeHtml(date)}</span></div>
+  </div>
+</a>`;
+
+  const searchHtml = `    {
+      title: "${title.replace(/"/g,'\\"')}",
+      category: "${subcat.replace(/"/g,'\\"')} — ${category.replace(/"/g,'\\"')}",
+      url: "article-${slug}.html",
+      excerpt: "${(dek || lead).slice(0,120).replace(/"/g,'\\"')}"
+    },`;
+
+  const blob = new Blob([articleHtml], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  const link = document.getElementById('downloadLink');
+  link.href = url;
+  link.download = 'article-' + slug + '.html';
+
+  document.getElementById('cardOutput').value = cardHtml;
+  document.getElementById('searchOutput').value = searchHtml;
+  document.getElementById('outputPanel').classList.add('show');
+  document.getElementById('outputPanel').scrollIntoView({behavior:'smooth'});
+}
+
+function copyBox(id, btn) {
+  const el = document.getElementById(id);
+  el.select();
+  document.execCommand('copy');
+  btn.textContent = 'تم النسخ ✓';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'نسخ الكود'; btn.classList.remove('copied'); }, 1800);
+}
+
+/* ============================================================
+   ملاحظة صريحة: هذا تحقق من ناحية العميل (Client-side) فقط —
+   مناسب لمنع الزوار العاديين والفضوليين من الوصول للأداة، لكنه
+   مش حماية حقيقية ضد أي حد يفتح كود الصفحة (View Source) عمدًا،
+   لأن كلمة السر مكتوبة في الكود نفسه بشكل واضح. لحماية حقيقية،
+   الأداة محتاجة تُنقل لسيرفر حقيقي بمصادقة من جهة الخادم.
+   ============================================================ */
+const ADMIN_PASSWORD = "TiladAdmin2026"; // غيّر كلمة السر دي لأي حاجة تفضّلها
+
+function checkPassword() {
+  const input = document.getElementById('lockPassword').value;
+  if (input === ADMIN_PASSWORD) {
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+  } else {
+    document.getElementById('lockError').style.display = 'block';
+  }
+}
+document.getElementById('lockPassword').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') checkPassword();
+});
+</script>
+
+</body>
+</html>
